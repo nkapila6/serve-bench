@@ -44,9 +44,9 @@ async def completions(request: ChatCompletionRequest):
     completion_tokens = len(reply.split())
 
     return {
-        "id": "chatcmpl-"+uuid.uuid4().hex,  # need to look at uuid
+        "id": "chatcmpl-"+uuid.uuid4().hex,
         "object": "chat.completion",
-        "created": int(time.time()),  # time
+        "created": int(time.time()),
         "model": request.model,
         "choices": [
             {
