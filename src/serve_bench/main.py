@@ -1,4 +1,6 @@
 import os
+import time
+import uuid
 import uvicorn
 from pydantic import BaseModel
 
@@ -35,23 +37,28 @@ async def completions(request: ChatCompletionRequest):
     # model='x' messages=[Message(role='user', content='hi')] max_tokens=None stream=False
     # print(request)
     # print("model name is: " + request.model)
+    
+    user_req = request.messages[-1].content
+    reply = "You said: " + user_req
+    prompt_tokens = len(user_req.split())
+    completion_tokens = len(reply.split())
 
     return {
-        "id": 0,  # need to look at uuid
+        "id": "chatcmpl-"+uuid.uuid4().hex,  # need to look at uuid
         "object": "chat.completion",
-        "created": 100,  # time
-        "model": "urmum",
+        "created": int(time.time()),  # time
+        "model": request.model,
         "choices": [
             {
                 "index": 0,
-                "message": {"role": "assistant", "content": "yey"},
+                "message": {"role": "assistant", "content": reply},
                 "finish_reason": "stop",
             }
         ],
         "usage": {
-            "prompt_tokens": 10,  # len(tokenized request)
-            "completion_tokens": 100,  # len(output tokenized)
-            "total": 110,  # above 2 added
+            "prompt_tokens": prompt_tokens,
+            "completion_tokens": completion_tokens,
+            "total_tokens": prompt_tokens+completion_tokens,  # above 2 added
         },
     }
 
