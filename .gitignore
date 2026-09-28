@@ -1,0 +1,32 @@
+# python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+dist/
+build/
+
+# env
+.env
+.env.*
+!.env.example
+
+# models and caches (big files, never commit)
+models/
+*.gguf
+*.safetensors
+.cache/
+
+# tooling
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+# os / editor
+.DS_Store
+.vscode/
+.idea/
+
+# local notes
+explained/
