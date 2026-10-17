@@ -67,9 +67,11 @@ async def completions(request: ChatCompletionRequest):
     # print(request)
     # print("model name is: " + request.model)
 
+    prompt_tokens = 0
+    for msg in request.messages:
+        prompt_tokens += len(msg.content.split())
     user_req = request.messages[-1].content
     reply = "You said: " + user_req
-    prompt_tokens = len(user_req.split())
     completion_tokens = len(reply.split())
 
     return {
